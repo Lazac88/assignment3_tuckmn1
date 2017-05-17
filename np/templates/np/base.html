@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>My News Site</title>
+        
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/frontPageStyle.css' %}">
+    </head>
+    <body>       
+        <div id="centerPage">
+        	<div id="login">
+                {% if user.is_authenticated %}
+                    <p class="loginp">Welcome {{ user.username}}<small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+                {% else %}
+                    <a class="loginp" href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+                {% endif %}
+            </div>
+            <a href="/">
+	           <h1>Amazing News</h1>
+            </a>
+            <div id="addArticle">
+                {% if user.is_authenticated %}
+                <a href="{% url 'article_new' %}" class="top-menu"><span>Add</span><span class="glyphicon glyphicon-plus"></span></a>
+                {% endif %}
+            </div>
+            <div id="clear"></div>
+	        <nav>
+                <ul id="navList">
+                    <li><a href="{% url 'article_filter' section='National' %}">National</a></li>
+                    <li><a href="{% url 'article_filter' section='International' %}">International</a></li>
+                    <li><a href="{% url 'article_filter' section='Technology' %}">Technology</a></li>
+                    <li><a href="{% url 'article_filter' section='Sport' %}">Sport</a></li>
+                </ul>
+
+            </nav>
+	        <div id="articleContainer">
+	        {% block content %}
+	        {% endblock %}
+	        </div>
+	        <footer><p id="footer"> &copy; Matt Tucker 2017</p></footer>
+		</div>
+    </body>
+</html>
